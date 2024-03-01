@@ -10,13 +10,13 @@ import CollapsibleHours from './collapsibleHours';
 
 interface CalendarProps {
   startDate: string; // We'll accept ISO format string as startDate
-  start?: number; // Optional collapsibleHours prop
-  end?: number;
+  collapseStart: number; // Optional collapsibleHours prop
+  collapseEnd: number;
 }
 
 
 
-const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, start, end }) => {
+const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapseStart, collapseEnd }) => {
   // Convert ISO string to Luxon DateTime object
   const startDateObj = DateTime.fromISO(startDate);
 
@@ -48,9 +48,16 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, start, end }) => {
             <Label>{date.toFormat('dd')+", "}</Label>
             <Label>{date.toFormat('EEE')}</Label>
             <div className="hours">
-              <CollapsibleHours start={0} end={9} />
-
               
+              <CollapsibleHours start={collapseStart} end={collapseEnd} />
+
+              {hours.map((hour) => {
+                // Check if the hour falls outside the collapsible range
+                if (hour>collapseEnd) {
+                  return <div key={hour}>{hour}:00</div>;
+                }
+                return null;
+              })}
                 
               
             </div>
