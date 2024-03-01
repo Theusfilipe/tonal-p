@@ -31,9 +31,6 @@ const CollapsibleHours: React.FC<CollapsibleHoursProps> = ({ start, end }) => {
           </Button>
         </CollapsibleTrigger>
       </div>
-      <div className="rounded-md border px-4 py-3 font-mono text-sm">
-        {/* Additional content if needed */}
-      </div>
       <CollapsibleContent className="space-y-2">
         {/* Render each hour inside the collapsible component */}
         {collapsibleHours.map((hour, index) => (
