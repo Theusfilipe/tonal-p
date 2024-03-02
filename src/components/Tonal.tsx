@@ -2,7 +2,6 @@
 import  { useState } from 'react';
 import WeeklyCalendar from './WeeklyCalendar';
 
-const [startDate, setStartDate] = useState<string>('2024-03-01');
 
 interface collapsibleDay{
   collapseStart: number;
@@ -15,15 +14,19 @@ interface TonalProps {
 }
   
 
+  
+
+const TonalCalendar: React.FC<TonalProps> = ({ startDate, collapsibleWeek}) => {
+  
+
+  const [currentDate, setStartDate] = useState<string>(startDate);
+
   const handleStartDateChange = (newStartDate: string) => {
     setStartDate(newStartDate);
   };
 
-const TonalCalendar: React.FC<TonalProps> = ({ startDate, collapsibleWeek}) => {
-  setStartDate(startDate);
-
   return (
-    <WeeklyCalendar startDate={startDate} collapsibleWeek={collapsibleWeek} onChangeStartDate={handleStartDateChange} />
+    <WeeklyCalendar startDate={currentDate} collapsibleWeek={collapsibleWeek} onChangeStartDate={handleStartDateChange} />
 
   );
 
