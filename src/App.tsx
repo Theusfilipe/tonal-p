@@ -1,6 +1,7 @@
-import WeeklyCalendar from "./components/WeeklyCalendar";
-import React, { useState } from 'react';
+
+import  { useState } from 'react';
 import {CollapsibleDay} from "./components/collapsibleDay"
+import TonalCalendar from "./components/Tonal";
 
 export function App() {
 
@@ -22,7 +23,7 @@ const [startDate, setStartDate] = useState<string>('2024-03-01');
   return (
     <div className="app">
       <h1>My Weekly Calendar App</h1>
-      <WeeklyCalendar startDate={startDate} collapsibleWeek={collapsibleWeek} onChangeStartDate={handleStartDateChange} />
+      <TonalCalendar startDate={startDate} collapsibleWeek={collapsibleWeek} />
     </div>
   );
 }
