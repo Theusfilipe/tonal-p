@@ -76,7 +76,7 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, o
 
   return (
     <div className="weekly-calendar">
-      <h2>Week of {weekDates.at(0)?.day} of {weekDates.at(0)?.monthLong} of {weekDates.at(0)?.year} </h2>
+      <h2>Week of {weekDates.at(0)?.day} of {weekDates.at(0)?.monthLong} of {weekDates.at(0)?.year} until {weekDates.at(6)?.day} of {weekDates.at(6)?.monthLong} of {weekDates.at(6)?.year} </h2>
       <div className="week-days-container">
         {weekDates.map((date, index) => (
           <div key={index} className="day">
