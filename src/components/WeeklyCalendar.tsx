@@ -4,6 +4,8 @@ import  '../global.css';
 import { Label } from './ui/label';
 
 import CollapsibleHours from './collapsibleHours';
+import ScheduledPerson from '@/Objects/ScheduledPerson';
+
 
 import {
   Pagination,
@@ -67,6 +69,9 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, o
     return dates;
   };
 
+
+  const scheudule : ScheduledPerson[] = [new ScheduledPerson(new Date('2024-03-13T10:00:00'),"Fred")];
+
   
 
   const weekDates = generateWeekDates(startDateObj);
@@ -89,7 +94,13 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, o
               {hours.map((hour) => {
                 // Check if the hour falls outside the collapsible range
                 if (hour>collapsibleWeek[index].collapseEnd) {
-                  return <div key={hour}>{hour}:00</div>;
+                  if((date.year === scheudule[0].date.getFullYear())&&(date.month === scheudule[0].date.getMonth()+1) && (date.day === scheudule[0].date.getDate()) && (hour === scheudule[0].date.getHours())){
+                    return <div key={hour}>{scheudule[0].name + " " + scheudule[0].date.getDate()+"/"+scheudule[0].date.getMonth() + " " + date.day+"/"+date.month}</div>;
+                  
+                  }else{
+                    return <div key={hour}>{hour}:00</div>;
+                  }
+                  
                 }
                 return null;
               })}

@@ -5,7 +5,7 @@ import TonalCalendar from "./components/Tonal";
 export function App() {
 
 // Example start date for the weekly calendar
-  const startDate= '2024-03-01';
+  const startDate= '2024-03-04';
 
 
   let collapsibleWeek: CollapsibleDay[] = [];
