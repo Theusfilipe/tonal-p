@@ -6,6 +6,7 @@ import { Label } from './ui/label';
 import CollapsibleHours from './collapsibleHours';
 import ScheduledPerson from '@/Objects/ScheduledPerson';
 import ScheduledPersonCard from './ScheduledPersonCard';
+import EmptyScheduledPersonCard from './EmptyScheduledPersonCard';
 
 import {
   Pagination,
@@ -94,32 +95,30 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, o
               <CollapsibleHours start={collapsibleWeek[index].collapseStart} end={collapsibleWeek[index].collapseEnd} />
 
               {hours.map((hour) => {
-  // Check if the hour falls outside the collapsible range
-  if (hour > collapsibleWeek[index].collapseEnd) {
-    // Check if there's a scheduled activity for the current date and hour
-    const scheduledActivity = scheudule.find((activity) =>
-      (
-        date.year === activity.date.getFullYear() &&
-        date.month === activity.date.getMonth() + 1 &&
-        date.day === activity.date.getDate() &&
-        hour === activity.date.getHours()
-      )
-    );
+                // Check if the hour falls outside the collapsible range
+                if (hour > collapsibleWeek[index].collapseEnd) {
+                  // Check if there's a scheduled activity for the current date and hour
+                  const scheduledActivity = scheudule.find((activity) =>
+                        (
+                          date.year === activity.date.getFullYear() &&
+                          date.month === activity.date.getMonth() + 1 &&
+                          date.day === activity.date.getDate() &&
+                          hour === activity.date.getHours()
+                        )
+                        );
 
-    // If a scheduled activity is found, display its information
-    if (scheduledActivity) {
-      return (
-        
-
-        <ScheduledPersonCard person={scheduledActivity} />
-      );
-    } else {
-      // Otherwise, display the hour
-      return <div key={hour}>{hour}:00</div>;
-    }
-  }
-  return null; // No need to return anything if hour is within the collapsible range
-})}
+                  // If a scheduled activity is found, display its information
+                  if (scheduledActivity) {
+                    return (
+                    <ScheduledPersonCard person={scheduledActivity} />
+                    );
+                  } else {
+                    // Otherwise, display the hour
+                    return <EmptyScheduledPersonCard date={hour+":00"} />;
+                  }
+                }
+              return null; // No need to return anything if hour is within the collapsible range
+            })}
                 
               
             </div>

@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+
 import { Label } from "@/components/ui/label"
 import {
   Select,
@@ -27,32 +27,30 @@ interface CardProps {
 
 const ScheduledPersonCard: React.FC<CardProps> = ({ person}) => {
 
-
-
+  
   return (
+
+    
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>{person.name}</CardTitle>
-        <CardDescription>Person scheduled for this hour</CardDescription>
+        <CardTitle>{person.name} scheduled for this hour</CardTitle>
+        <CardDescription> {person.date.toTimeString()} </CardDescription>
       </CardHeader>
       <CardContent>
         <form>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">{person.date.toISOString()}</Label>
-              <Input id="name" placeholder="Name of your project" />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Framework</Label>
+              <Label htmlFor="framework">Action</Label>
               <Select>
                 <SelectTrigger id="framework">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="next">Next.js</SelectItem>
-                  <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                  <SelectItem value="astro">Astro</SelectItem>
-                  <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                  <SelectItem value="cancel">Cancel</SelectItem>
+                  <SelectItem value="reschedule">Reschedule</SelectItem>
+                  <SelectItem value="notes">Add notes</SelectItem>
+                  <SelectItem value="complete">Mark as complete</SelectItem>
+                  <SelectItem value="remind">Remind</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -61,9 +59,12 @@ const ScheduledPersonCard: React.FC<CardProps> = ({ person}) => {
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button variant="outline">Cancel</Button>
-        <Button>Deploy</Button>
+        <Button>Submit Action</Button>
       </CardFooter>
     </Card>
+    
+    
+    
   )
 }
 
