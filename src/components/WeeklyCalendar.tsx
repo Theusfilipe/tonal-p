@@ -3,8 +3,8 @@ import { DateTime } from 'luxon';
 import  '../global.css';
 import { Label } from './ui/label';
 
-import { CollapsibleDay } from './CollapsibleComponents/collapsibleDay';
-import { CollapsibleHours } from './CollapsibleComponents/collapsibleHours';
+import { CollapsibleDay } from './CollapsibleComponents/CollapsibleDay';
+
 import CollapsibleHoursRender from './CollapsibleComponents/collapsibleHoursRender';
 import ScheduledPerson from '@/Objects/ScheduledPerson';
 import ScheduledPersonCard from './ScheduledPersonCard';
@@ -94,6 +94,8 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, s
           if (collapsiblePeriod) {
             if (hour === collapsiblePeriod.collapseStart) {
               return <CollapsibleHoursRender start={collapsiblePeriod.collapseStart} end={collapsiblePeriod.collapseEnd} />;
+            } else if (hour > collapsiblePeriod.collapseStart && hour < collapsiblePeriod.collapseEnd) {
+              return null; // Skip rendering for the collapsed hours after the start of a collapsible period
             }
           } else {
             const scheduledActivity = schedule.find((activity) =>

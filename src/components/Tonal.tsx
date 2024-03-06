@@ -3,7 +3,7 @@ import  { useState } from 'react';
 import WeeklyCalendar from './WeeklyCalendar';
 import ScheduledPerson from '@/Objects/ScheduledPerson';
 
-import { CollapsibleDay } from './CollapsibleComponents/collapsibleDay';
+import { CollapsibleDay } from './CollapsibleComponents/CollapsibleDay';
 
 
 

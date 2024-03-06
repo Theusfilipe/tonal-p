@@ -35,7 +35,7 @@ const CollapsibleHoursRender: React.FC<CollapsibleHoursProps> = ({ start, end })
       <CollapsibleContent className="space-y-2">
         {/* Render each hour inside the collapsible component */}
         {collapsibleHours.map((hour, index) => (
-          <EmptyScheduledPersonCard date={hour+":00"} />
+          <EmptyScheduledPersonCard key={index} date={hour+":00"} />
         ))}
       </CollapsibleContent>
     </Collapsible>

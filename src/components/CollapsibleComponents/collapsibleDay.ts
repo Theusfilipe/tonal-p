@@ -1,4 +1,4 @@
-import {CollapsibleHours} from "./collapsibleHours"
+import { CollapsibleHours } from "./CollapsibleHours"
 
 export class CollapsibleDay {
   collapsibleHours: CollapsibleHours[];

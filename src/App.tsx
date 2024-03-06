@@ -1,7 +1,7 @@
 
-import {CollapsibleDay} from "./components/CollapsibleComponents/collapsibleDay"
+import {CollapsibleDay} from "./components/CollapsibleComponents/CollapsibleDay"
 import TonalCalendar from "./components/Tonal";
-import {CollapsibleHours} from "./components/CollapsibleComponents/collapsibleHours";
+import {CollapsibleHours} from "./components/CollapsibleComponents/CollapsibleHours";
 
 export function App() {
 
