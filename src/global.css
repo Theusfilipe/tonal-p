@@ -79,14 +79,19 @@
   /* Add styles as needed */
 }
 
+
 .week-days-container {
   display: flex;
+  justify-content: space-between;
 }
 
 .day {
-  flex: 1;
+  flex: 1 0 auto;
+  margin: 0 5px;
   border: 1px solid #ccc;
   margin-right: 10px; /* Adjust spacing between days */
+  overflow: hidden; 
+  max-width: calc(100% / 7 - 10px); 
 }
 
 .day-label {
@@ -97,6 +102,7 @@
   border-top: 1px solid #ccc;
   display: flex;
   flex-direction: column;
+  width: 100%; /* Add this line */
 }
 
 .hour {

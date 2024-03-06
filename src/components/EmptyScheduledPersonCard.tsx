@@ -22,7 +22,7 @@ const ScheduledPersonCard: React.FC<CardProps> = ({ date}) => {
   return (
 
     
-    <Card className="w-[350px]">
+    <Card className="w-[260px] border-0">
       <CardHeader>
         <CardDescription>{date }</CardDescription>
       </CardHeader>

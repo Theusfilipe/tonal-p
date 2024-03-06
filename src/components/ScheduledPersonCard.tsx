@@ -31,7 +31,7 @@ const ScheduledPersonCard: React.FC<CardProps> = ({ person}) => {
   return (
 
     
-    <Card className="w-[350px]">
+    <Card className="w-[260px]">
       <CardHeader>
         <CardTitle>{person.name} scheduled for this hour</CardTitle>
         <CardDescription> {person.date.toTimeString()} </CardDescription>
