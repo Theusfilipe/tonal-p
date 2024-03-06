@@ -5,14 +5,14 @@ import { Label } from './ui/label';
 
 import CollapsibleHours from './collapsibleHours';
 import ScheduledPerson from '@/Objects/ScheduledPerson';
-
+import ScheduledPersonCard from './ScheduledPersonCard';
 
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
+  
   PaginationItem,
-  PaginationLink,
+  
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
@@ -30,6 +30,8 @@ interface collapsibleDay{
   collapseStart: number;
   collapseEnd: number;
 }
+
+
 
 
 
@@ -70,7 +72,7 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, o
   };
 
 
-  const scheudule : ScheduledPerson[] = [new ScheduledPerson(new Date('2024-03-13T10:00:00'),"Fred")];
+  const scheudule : ScheduledPerson[] = [new ScheduledPerson(new Date('2024-03-13T10:00:00'),"Fred"), new ScheduledPerson(new Date('2024-03-13T11:00:00'),"Gregory"), new ScheduledPerson(new Date('2024-03-14T11:00:00'),"Gregory")];
 
   
 
@@ -92,18 +94,32 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, o
               <CollapsibleHours start={collapsibleWeek[index].collapseStart} end={collapsibleWeek[index].collapseEnd} />
 
               {hours.map((hour) => {
-                // Check if the hour falls outside the collapsible range
-                if (hour>collapsibleWeek[index].collapseEnd) {
-                  if((date.year === scheudule[0].date.getFullYear())&&(date.month === scheudule[0].date.getMonth()+1) && (date.day === scheudule[0].date.getDate()) && (hour === scheudule[0].date.getHours())){
-                    return <div key={hour}>{scheudule[0].name + " " + scheudule[0].date.getDate()+"/"+scheudule[0].date.getMonth() + " " + date.day+"/"+date.month}</div>;
-                  
-                  }else{
-                    return <div key={hour}>{hour}:00</div>;
-                  }
-                  
-                }
-                return null;
-              })}
+  // Check if the hour falls outside the collapsible range
+  if (hour > collapsibleWeek[index].collapseEnd) {
+    // Check if there's a scheduled activity for the current date and hour
+    const scheduledActivity = scheudule.find((activity) =>
+      (
+        date.year === activity.date.getFullYear() &&
+        date.month === activity.date.getMonth() + 1 &&
+        date.day === activity.date.getDate() &&
+        hour === activity.date.getHours()
+      )
+    );
+
+    // If a scheduled activity is found, display its information
+    if (scheduledActivity) {
+      return (
+        
+
+        <ScheduledPersonCard person={scheduledActivity} />
+      );
+    } else {
+      // Otherwise, display the hour
+      return <div key={hour}>{hour}:00</div>;
+    }
+  }
+  return null; // No need to return anything if hour is within the collapsible range
+})}
                 
               
             </div>
