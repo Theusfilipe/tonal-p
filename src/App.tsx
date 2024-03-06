@@ -1,6 +1,7 @@
 
-import {CollapsibleDay} from "./components/collapsibleDay"
+import {CollapsibleDay} from "./components/CollapsibleComponents/collapsibleDay"
 import TonalCalendar from "./components/Tonal";
+import {CollapsibleHours} from "./components/CollapsibleComponents/collapsibleHours";
 
 export function App() {
 
@@ -11,7 +12,13 @@ export function App() {
   let collapsibleWeek: CollapsibleDay[] = [];
 
   for (let i = 0; i < 7; i++) {
-    collapsibleWeek.push(new CollapsibleDay(0,8));
+    const colHours = new CollapsibleHours(0,8);
+    const colDay = new CollapsibleDay([colHours]);
+    if((i) === 0 || (i) === 6){
+      colDay.addCollapsibleHours(18,24);
+    }
+    
+    collapsibleWeek.push(colDay);
   }
 
   

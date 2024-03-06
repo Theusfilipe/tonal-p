@@ -3,7 +3,9 @@ import { DateTime } from 'luxon';
 import  '../global.css';
 import { Label } from './ui/label';
 
-import CollapsibleHours from './collapsibleHours';
+import { CollapsibleDay } from './CollapsibleComponents/collapsibleDay';
+import { CollapsibleHours } from './CollapsibleComponents/collapsibleHours';
+import CollapsibleHoursRender from './CollapsibleComponents/collapsibleHoursRender';
 import ScheduledPerson from '@/Objects/ScheduledPerson';
 import ScheduledPersonCard from './ScheduledPersonCard';
 import EmptyScheduledPersonCard from './EmptyScheduledPersonCard';
@@ -24,19 +26,16 @@ import {
 interface CalendarProps {
   startDate: string; // We'll accept ISO format string as startDate
   onChangeStartDate: (newStartDate: string) => void; // Callback to update startDate
-  collapsibleWeek: collapsibleDay[]; 
-}
-
-interface collapsibleDay{
-  collapseStart: number;
-  collapseEnd: number;
+  collapsibleWeek: CollapsibleDay[]; 
+  schedule : ScheduledPerson[];
 }
 
 
 
 
 
-const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, onChangeStartDate }) => {
+
+const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, schedule, onChangeStartDate }) => {
   // Convert ISO string to Luxon DateTime object
   const startDateObj = DateTime.fromISO(startDate);
 
@@ -73,8 +72,7 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, o
   };
 
 
-  const scheudule : ScheduledPerson[] = [new ScheduledPerson(new Date('2024-03-13T10:00:00'),"Fred"), new ScheduledPerson(new Date('2024-03-13T11:00:00'),"Gregory"), new ScheduledPerson(new Date('2024-03-14T11:00:00'),"Gregory")];
-
+  
   
 
   const weekDates = generateWeekDates(startDateObj);
@@ -86,45 +84,39 @@ const WeeklyCalendar: React.FC<CalendarProps> = ({ startDate, collapsibleWeek, o
     <div className="weekly-calendar">
       <h2>Week of {weekDates.at(0)?.day} of {weekDates.at(0)?.monthLong} of {weekDates.at(0)?.year} until {weekDates.at(6)?.day} of {weekDates.at(6)?.monthLong} of {weekDates.at(6)?.year} </h2>
       <div className="week-days-container">
-        {weekDates.map((date, index) => (
-          <div key={index} className="day">
-            <Label>{date.toFormat('dd')+", "}</Label>
-            <Label>{date.toFormat('EEE')}</Label>
-            <div className="hours">
-              
-              <CollapsibleHours start={collapsibleWeek[index].collapseStart} end={collapsibleWeek[index].collapseEnd} />
+  {weekDates.map((date, index) => (
+    <div key={index} className="day">
+      <Label>{date.toFormat('dd')+", "}</Label>
+      <Label>{date.toFormat('EEE')}</Label>
+      <div className="hours">
+        {hours.map((hour, i) => {
+          const collapsiblePeriod = collapsibleWeek[index].find(period => hour >= period.collapseStart && hour < period.collapseEnd);
+          if (collapsiblePeriod) {
+            if (hour === collapsiblePeriod.collapseStart) {
+              return <CollapsibleHoursRender start={collapsiblePeriod.collapseStart} end={collapsiblePeriod.collapseEnd} />;
+            }
+          } else {
+            const scheduledActivity = schedule.find((activity) =>
+              (
+                date.year === activity.date.getFullYear() &&
+                date.month === activity.date.getMonth() + 1 &&
+                date.day === activity.date.getDate() &&
+                hour === activity.date.getHours()
+              )
+            );
 
-              {hours.map((hour) => {
-                // Check if the hour falls outside the collapsible range
-                if (hour > collapsibleWeek[index].collapseEnd) {
-                  // Check if there's a scheduled activity for the current date and hour
-                  const scheduledActivity = scheudule.find((activity) =>
-                        (
-                          date.year === activity.date.getFullYear() &&
-                          date.month === activity.date.getMonth() + 1 &&
-                          date.day === activity.date.getDate() &&
-                          hour === activity.date.getHours()
-                        )
-                        );
-
-                  // If a scheduled activity is found, display its information
-                  if (scheduledActivity) {
-                    return (
-                    <ScheduledPersonCard person={scheduledActivity} />
-                    );
-                  } else {
-                    // Otherwise, display the hour
-                    return <EmptyScheduledPersonCard date={hour+":00"} />;
-                  }
-                }
-              return null; // No need to return anything if hour is within the collapsible range
-            })}
-                
-              
-            </div>
-          </div>
-        ))}
+            if (scheduledActivity) {
+              return <ScheduledPersonCard person={scheduledActivity} />;
+            } else {
+              return <EmptyScheduledPersonCard date={hour+":00"} />;
+            }
+          }
+          return null;
+        })}
       </div>
+    </div>
+  ))}
+</div>
       <Pagination>
         <PaginationContent>
           <PaginationItem>

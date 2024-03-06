@@ -1,5 +1,5 @@
 // Assuming CollapsibleDay is a class
-export class CollapsibleDay {
+export class CollapsibleHours {
   collapseStart: number;
   collapseEnd: number;
 

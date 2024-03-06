@@ -1,14 +1,15 @@
 import React from 'react';
 import { ChevronsUpDown } from "lucide-react";
-import { Button } from "./ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+import { Button } from "../ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import EmptyScheduledPersonCard from "../EmptyScheduledPersonCard";
 
 interface CollapsibleHoursProps {
   start: number; // Start hour of the collapsible range
   end: number; // End hour of the collapsible range
 }
 
-const CollapsibleHours: React.FC<CollapsibleHoursProps> = ({ start, end }) => {
+const CollapsibleHoursRender: React.FC<CollapsibleHoursProps> = ({ start, end }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   // Generate an array of hours within the collapsible range
@@ -34,11 +35,11 @@ const CollapsibleHours: React.FC<CollapsibleHoursProps> = ({ start, end }) => {
       <CollapsibleContent className="space-y-2">
         {/* Render each hour inside the collapsible component */}
         {collapsibleHours.map((hour, index) => (
-          <div key={index}>{hour}:00</div>
+          <EmptyScheduledPersonCard date={hour+":00"} />
         ))}
       </CollapsibleContent>
     </Collapsible>
   );
 };
 
-export default CollapsibleHours;
+export default CollapsibleHoursRender;
